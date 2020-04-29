@@ -1,0 +1,79 @@
+Data Analysis
+
+1.
+
+CREATE VIEW employee_info_salary AS
+SELECT  employees.employee_id,employees.first_name, employees.last_name, employees.sex, salaries.salary
+From employees
+Right Join salaries
+ON salaries.employee_id = employees.employee_id
+Order By employee_id;
+
+2.
+
+CREATE VIEW employees_1986 AS
+SELECT employees.first_name, employees.last_name, employees.hire_date
+From employees
+WHERE hire_date LIKE '%86%';
+
+3.
+
+CREATE VIEW department_managers AS
+SELECT deptmanager.department_id, departments.department_name, deptmanager.employee_id, employees.first_name, employees.last_name
+FROM deptmanager
+LEFT JOIN employees
+ON deptmanager.employee_id = employees.employee_id
+RIGHT JOIN departments
+ON deptmanager.department_id = departments.department_id;
+
+4.
+
+CREATE VIEW employees_and_departments as
+SELECT employees.employee_id, employees.last_name, employees.first_name, deptemployees.department_id, departments.department_name
+FROM employees
+LEFT JOIN deptemployees
+ON deptemployees.employee_number = employees.employee_id
+RIGHT JOIN departments
+ON departments.department_id = deptemployees.department_id
+order by employee_id;
+
+5.
+
+CREATE VIEW hercules_b_view AS
+SELECT employees.first_name, employees.last_name, employees.sex
+From employees
+WHERE first_name = 'Hercules' AND
+last_name LIKE '%B%';
+
+6.
+
+CREATE VIEW salesdept_employees AS
+SELECT employees.employee_id, employees.last_name, employees.first_name, departments.department_name
+FROM employees
+LEFT JOIN deptemployees
+ON deptemployees.employee_number = employees.employee_id
+LEFT JOIN departments
+ON departments.department_id = deptemployees.department_id
+WHERE department_name = 'Sales'
+
+7. 
+
+CREATE VIEW sales_and_development_dept AS
+SELECT employees.employee_id, employees.last_name, employees.first_name, departments.department_name
+FROM employees
+LEFT JOIN deptemployees
+ON deptemployees.employee_number = employees.employee_id
+LEFT JOIN departments
+ON departments.department_id = deptemployees.department_id
+WHERE department_name = 'Sales' OR department_name = 'Development'
+ORDER BY employee_id;
+ORDER BY employee_id;
+
+8.
+
+CREATE VIEW last_name_counts AS
+SELECT last_name, Count(*)
+FROM employees
+GROUP BY last_name
+HAVING COUNT (*) > 1
+ORDER BY count DESC;
